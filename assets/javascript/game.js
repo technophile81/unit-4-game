@@ -1,11 +1,9 @@
 // My RPG Game
 //-------------------------------------------------------------------
 
-// Opponent will instantly counter the attack. When that happens, the player's character loses some of their HP. Also display HP under picture.
 
 // Player continues hitting ATTACK button to defeat enemy.
 
-//When enemy HP reduced to 0 or below, alert the player that the enemy was defeated.
 // Remove enemy from "defender area".
 
 // Player chooses a new opponent.
@@ -20,14 +18,20 @@
 
 $(document).ready(function () {
 
+
     // Establish an object for the entire game.
 
-    var rpgGame = {
+    var rpgGame = {};
 
+    // Create a function to reset the game. This will be a click that appears after player HP hits 0.
+
+    function resetGame() {
+
+        // rebuild `rpgGame.gameCharacters` from scratch
         // Create each character. List its stats: Name, Attack Power, Health Points, Counter Attack Power
         // Each time user attacks, character Attack Power increases by its base Attack Power; e.g. If base AP is 6, each attack will increase the AP by 6 (12, 18, 24, etc)
 
-        "gameCharacters": {
+        rpgGame.gameCharacters = {
             "mario": {
                 "name": "Mario",
                 "hp": 100,
@@ -63,28 +67,26 @@ $(document).ready(function () {
                 "imgurl": "assets/images/birdosprite.png",
 
             },
-        },
-
-    };
-
-    // Create a function to reset the game. This will be a click that appears after player HP hits 0.
-
-    function resetGame() {
-        $('#char-area').show();
-        $('#opponent-area').empty();
-        $('#fight-section').empty();
-        $('#opponent-select').empty();
-        $('#char-area-select').empty();
-        $(".opponent").addClass("reset");
-    };
-
-    function resetBtn() {
-        if (charHP < 0) {
-            $(this).removeClass("reset");
         };
-        $(".opponent").on("click", "opponent", function () {
-            resetGame();
-        });
+
+        $("#char-list").empty();
+        $("#opponent-list").empty();
+        $("#char-selected").empty();
+        $(".upcoming-list").empty();
+        $("#opponent-selected").empty();
+
+        $("#opponent-area").hide();
+        $("#opponent-select").hide();
+        $("#char-area-select").hide();
+        $("#fight-section").hide();
+        $("#upcoming-opponents").hide();
+
+
+        $("#char-area").show();
+
+        $(".btn-reset").addClass("reset");
+
+        showCharacters();
     };
 
     // Build the characters. 
@@ -110,10 +112,12 @@ $(document).ready(function () {
         $("#char-list").on("click", ".char-all", function () {
             $(this).addClass("selectedChar");
             $("#char-area").hide();
-            $("#char-area-select").removeClass("temphide");
+            $("#char-area-select").show();
+
             $(".selectedChar").appendTo("#char-selected").removeClass("default");
             $(".default").appendTo("#opponent-list");
-            $("#opponent-select").removeClass("temphide");
+            $("#opponent-select").show();
+
             rpgGame.currentCharacter = this.id.substring(10);
         });
 
@@ -122,38 +126,62 @@ $(document).ready(function () {
         // This action will also reveal the "fight" window.
         $("#opponent-list").on("click", ".char-all", function () {
             $(this).addClass("selectedOpponent");
-            $(".selectedOpponent").appendTo(".opponent-selected");
-            $("#opponent-select").addClass("temphide");
-            $("#opponent-area").removeClass("temphide");
-            $("#fight-section").removeClass("temphide");
+            //New stuff if things break
+            $(".char-all").addClass("nonactive");
+            $(".selectedOpponent").appendTo("#opponent-selected").removeClass("nonactive");
+            $(".selectedChar").removeClass("nonactive");
+            $("#upcoming-opponents").show();
+            $(".nonactive").appendTo(".upcoming-list");
+
+            //end of new
+            $("#opponent-select").hide();
+            $("#opponent-area").show();
+            $("#fight-section").show();
+
             rpgGame.currentOpponent = this.id.substring(10);
         })
     }
-
 
     // To begin fighting, player clicks ATTACK button.
     // Provide failsafe on ATTACK button that if player clicks, it says "no one here". Would be better to make it not appear till opponent selected.
     // When a player clicks ATTACK, the character damages the enemy. Opponent loses HP. Display HP under their picture.
 
-    $("#fight-section").on("click", ".btn-primary", function charAttack() {
-   
+
+    $("#fight-section").on("click", ".btn-attack", function charAttack() {
         rpgGame.gameCharacters[rpgGame.currentOpponent].hp -= rpgGame.gameCharacters[rpgGame.currentCharacter].attack;
-        counterAttack();
+        
+        if (rpgGame.gameCharacters[rpgGame.currentOpponent].hp > 0) {
+            counterAttack();
+        } else { 
+            rpgGame.gameCharacters[rpgGame.currentOpponent].hp = 0;
+            alert("You won this round!");
+            
+        }
+    
+
         console.log("opponent: " + rpgGame.currentOpponent + " hp: " + rpgGame.gameCharacters[rpgGame.currentOpponent].hp);
         console.log("character: " + rpgGame.currentCharacter + " hp: " + rpgGame.gameCharacters[rpgGame.currentCharacter].hp);
         $("#character-" + rpgGame.currentCharacter + " > .char-hp").text(rpgGame.gameCharacters[rpgGame.currentCharacter].hp);
         $("#character-" + rpgGame.currentOpponent + " > .char-hp").text(rpgGame.gameCharacters[rpgGame.currentOpponent].hp);
 
-
-
     })
 
+
+    // Create an array of already defeated opponents and hide them or move defeated opponents in a clunky way?
+
+
+    // Opponent will instantly counter the attack. When that happens, the player's character loses some of their HP.
     function counterAttack() {
         rpgGame.gameCharacters[rpgGame.currentCharacter].hp -= rpgGame.gameCharacters[rpgGame.currentOpponent].counter;
     }
 
+    $(".reset").click(function () {
+        resetGame();
+    });
 
-    showCharacters();
+
+    resetGame();
+
 
 
 

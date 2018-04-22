@@ -17,9 +17,9 @@ h1 {
     color: #fff;
 }
 
-button.reset {
+/*button.reset {
     display: none;
-}
+}*/
 
 .char-pic {
     height: auto;
@@ -69,10 +69,12 @@ button.reset {
 #opponent-area {
     float: right;
 }
+#upcoming-opponents { float: right;}
+.char-all.nonactive { transform: scale(0.75,0.75);}
 
-.temphide {
+/* .temphide {
     display: none;
-}
+}*/
 
 #fight-section {
     margin: 330px 0 30px;
