@@ -1,16 +1,6 @@
 // My RPG Game
 //-------------------------------------------------------------------
 
-
-
-
-
-
-
-// To begin fighting, player clicks ATTACK button.
-// Provide failsafe on ATTACK button that if player clicks, it says "no one here". Would be better to make it not appear till opponent selected.
-// When a player clicks ATTACK, the character damages the enemy. Opponent loses HP. Display HP under their picture.
-
 // Opponent will instantly counter the attack. When that happens, the player's character loses some of their HP. Also display HP under picture.
 
 // Player continues hitting ATTACK button to defeat enemy.
@@ -42,6 +32,7 @@ $(document).ready(function () {
                 "name": "Mario",
                 "hp": 100,
                 "attack": 14,
+                "baseAttack": 14,
                 "counter": 5,
                 "imgurl": "assets/images/mariosprite.png",
             },
@@ -49,6 +40,7 @@ $(document).ready(function () {
                 "name": "Daisy",
                 "hp": 120,
                 "attack": 8,
+                "baseAttack": 8,
                 "counter": 15,
                 "imgurl": "assets/images/daisysprite.png",
 
@@ -57,6 +49,7 @@ $(document).ready(function () {
                 "name": "Wario",
                 "hp": 180,
                 "attack": 7,
+                "baseAttack": 7,
                 "counter": 25,
                 "imgurl": "assets/images/wariosprite.png",
 
@@ -65,6 +58,7 @@ $(document).ready(function () {
                 "name": "Birdo",
                 "hp": 150,
                 "attack": 8,
+                "baseAttack": 8,
                 "counter": 20,
                 "imgurl": "assets/images/birdosprite.png",
 
@@ -94,8 +88,9 @@ $(document).ready(function () {
     };
 
     // Build the characters. 
-    function charCreation(character) {
-        var charAll = $("<div class='char-all default'>");
+    function charCreation(charId) {
+        var character = rpgGame.gameCharacters[charId];
+        var charAll = $("<div class='char-all default' id='character-" + charId + "'>");
         var charName = $("<div class='char-name'>").text(character.name);
         var charPic = $("<img class='char-pic' alt='character'>").attr('src', character.imgurl);
         var charHP = $("<div class='char-hp'>").text(character.hp);
@@ -104,14 +99,14 @@ $(document).ready(function () {
         return charAll;
     }
 
-    // Show the characters.
+    // When game starts, player chooses their character by clicking the chosen picture. 
+    // Move them around as player makes their selections.
     function showCharacters() {
         for (const charId of Object.keys(rpgGame.gameCharacters)) {
-            var charArea = charCreation(rpgGame.gameCharacters[charId]);
+            var charArea = charCreation(charId);
             $("#char-list").append(charArea);
-
         }
-        console.log("is this working?");
+        // This is the initial character selection that will move chosen character while moving remaining to opponent selection area.
         $("#char-list").on("click", ".char-all", function () {
             $(this).addClass("selectedChar");
             $("#char-area").hide();
@@ -119,35 +114,51 @@ $(document).ready(function () {
             $(".selectedChar").appendTo("#char-selected").removeClass("default");
             $(".default").appendTo("#opponent-list");
             $("#opponent-select").removeClass("temphide");
+            rpgGame.currentCharacter = this.id.substring(10);
         });
+
+        // Player then chooses an opponent by click. Player must defeat all the remaining fighters.
+        // Enemy, once selected, moves to a "opponent area" that we'll call #opponent-selected. 
+        // This action will also reveal the "fight" window.
         $("#opponent-list").on("click", ".char-all", function () {
             $(this).addClass("selectedOpponent");
             $(".selectedOpponent").appendTo(".opponent-selected");
             $("#opponent-select").addClass("temphide");
             $("#opponent-area").removeClass("temphide");
             $("#fight-section").removeClass("temphide");
-
+            rpgGame.currentOpponent = this.id.substring(10);
         })
     }
 
 
+    // To begin fighting, player clicks ATTACK button.
+    // Provide failsafe on ATTACK button that if player clicks, it says "no one here". Would be better to make it not appear till opponent selected.
+    // When a player clicks ATTACK, the character damages the enemy. Opponent loses HP. Display HP under their picture.
+
+    $("#fight-section").on("click", ".btn-primary", function charAttack() {
+   
+        rpgGame.gameCharacters[rpgGame.currentOpponent].hp -= rpgGame.gameCharacters[rpgGame.currentCharacter].attack;
+        counterAttack();
+        console.log("opponent: " + rpgGame.currentOpponent + " hp: " + rpgGame.gameCharacters[rpgGame.currentOpponent].hp);
+        console.log("character: " + rpgGame.currentCharacter + " hp: " + rpgGame.gameCharacters[rpgGame.currentCharacter].hp);
+        $("#character-" + rpgGame.currentCharacter + " > .char-hp").text(rpgGame.gameCharacters[rpgGame.currentCharacter].hp);
+        $("#character-" + rpgGame.currentOpponent + " > .char-hp").text(rpgGame.gameCharacters[rpgGame.currentOpponent].hp);
+
+
+
+    })
+
+    function counterAttack() {
+        rpgGame.gameCharacters[rpgGame.currentCharacter].hp -= rpgGame.gameCharacters[rpgGame.currentOpponent].counter;
+    }
 
 
     showCharacters();
 
-    // When game starts, player chooses their character by clicking the chosen picture. 
 
 
-    // Player then chooses an opponent by click. Player must defeat all the remaining fighters.
-    // Enemy, once selected, moves to a "defender area" that we'll call #fight-section. 
 
 
-    $("#fight-section").on("click", ".btn-primary", function () {
-        alert("This is a test");
-        // Create a string which will hold the lottery number
-        var charAttack = "";
-
-    })
 
 
     // Global variables:
