@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Gamja+Flower|Itim" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1>My RPG Game</h1>
+        <div id="char-area">
+            <h2 class="section-title">Select Your Character</h2>
+            <div id="char-list" class="clearfix"></div>
+        </div>
+        <div id="char-area-select" class="temphide">
+            <h2 class="section-title">You chose:</h2>
+            <div id="char-selected"></div>
+        </div>
+        <div id="opponent-select" class="temphide">
+            <h2 class="section-title">Choose Your Opponent</h2>
+            <div id="opponent-list"></div>
+        </div>
+        <div id="opponent-area" class="temphide">
+                <h2 class="section-title">Defender</h2>
+                <div class="opponent-selected"></div>
+                <button type="button" class="btn btn-primary opponent reset">Reset</button>
+
+            </div>
+            <div id="fight-section" class="temphide">
+                    <h2 class="section-title">Fight!</h2>
+                    <button type="button" class="btn btn-primary attack">Attack</button>
+                </div>
+
+    </div>
+
+</body>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js" integrity="sha384-lZmvU/TzxoIQIOD9yQDEpvxp6wEU32Fy0ckUgOH4EIlMOCdR823rg4+3gWRwnX1M"
+    crossorigin="anonymous"></script>
+<script src="assets/javascript/game.js"></script>
+
+</html>

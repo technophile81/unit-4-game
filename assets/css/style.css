@@ -1,0 +1,83 @@
+/* My RPG Game */
+
+body {
+    background: url("../images/2d_rpg_game_background_by_willowwisp.jpg") no-repeat;
+    background-size: cover;
+    font-family: "Itim", cursive;
+    font-size: 18px;
+}
+
+.container-fluid {
+    position: relative;
+    padding: 60px;
+}
+
+h1 {
+    font-weight: bold;
+    color: #fff;
+}
+
+button.reset {
+    display: none;
+}
+
+.char-pic {
+    height: auto;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.char-all {
+    margin-right: 30px;
+    width: 200px;
+    display: inline-block;
+}
+
+.char-name,
+.char-hp {
+    text-align: center;
+    display: block;
+    background-color: blue;
+    padding: 8px;
+    color: #fff;
+}
+
+.selectedChar .char-hp,
+.selectedOpponent .char-hp {
+    background-color: red;
+}
+
+.selectedOpponent .char-pic {
+    transform: scaleX(-1);
+    filter: FlipH;
+}
+
+#char-area {
+    text-align: center;
+    /*background-color: rgba(255,255,255,0.8);*/
+}
+
+#char-area-select {
+    float: left;
+}
+
+#opponent-select {
+    float: right;
+}
+
+#opponent-area {
+    float: right;
+}
+
+.temphide {
+    display: none;
+}
+
+#fight-section {
+    margin: 330px 0 30px;
+    text-align: center;
+    background-color: #fff;
+    padding: 30px;
+    width: 200px; 
+}
