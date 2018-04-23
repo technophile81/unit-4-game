@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     var bgMusic = $("#bkgd-music")[0],
         playing = true;
-    const rollSound = new Audio("assets/images/whoosh.ogg");
+    const rollSound = new Audio("assets/sounds/whoosh.ogg");
     $('.char-all').click(e => rollSound.play());
 
     // Create a function to reset the game. This will be a click that appears after player HP hits 0.
