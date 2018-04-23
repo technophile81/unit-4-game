@@ -18,7 +18,6 @@
 
 $(document).ready(function () {
 
-
     // Establish an object for the entire game.
 
     var rpgGame = {};
@@ -27,9 +26,11 @@ $(document).ready(function () {
 
     function resetGame() {
 
-        // rebuild `rpgGame.gameCharacters` from scratch
+        // Rebuild `rpgGame.gameCharacters` from scratch
         // Create each character. List its stats: Name, Attack Power, Health Points, Counter Attack Power
         // Each time user attacks, character Attack Power increases by its base Attack Power; e.g. If base AP is 6, each attack will increase the AP by 6 (12, 18, 24, etc)
+
+        rpgGame.wins = 0;
 
         rpgGame.gameCharacters = {
             "mario": {
@@ -81,7 +82,6 @@ $(document).ready(function () {
         $("#fight-section").hide();
         $("#upcoming-opponents").hide();
 
-
         $("#char-area").show();
 
         $(".btn-reset").addClass("reset");
@@ -130,8 +130,8 @@ $(document).ready(function () {
             $(".char-all").addClass("nonactive");
             $(".selectedOpponent").appendTo("#opponent-selected").removeClass("nonactive");
             $(".selectedChar").removeClass("nonactive");
-            $("#upcoming-opponents").show();
-            $(".nonactive").appendTo(".upcoming-list");
+            // $("#upcoming-opponents", ".upcoming-list").show();
+            $(".nonactive > .char-all").appendTo(".upcoming-list");
 
             //end of new
             $("#opponent-select").hide();
@@ -143,28 +143,41 @@ $(document).ready(function () {
     }
 
     // To begin fighting, player clicks ATTACK button.
-    // Provide failsafe on ATTACK button that if player clicks, it says "no one here". Would be better to make it not appear till opponent selected.
     // When a player clicks ATTACK, the character damages the enemy. Opponent loses HP. Display HP under their picture.
-
-
     $("#fight-section").on("click", ".btn-attack", function charAttack() {
+
         rpgGame.gameCharacters[rpgGame.currentOpponent].hp -= rpgGame.gameCharacters[rpgGame.currentCharacter].attack;
-        
+        rpgGame.gameCharacters[rpgGame.currentCharacter].attack += rpgGame.gameCharacters[rpgGame.currentCharacter].baseAttack;
+
         if (rpgGame.gameCharacters[rpgGame.currentOpponent].hp > 0) {
             counterAttack();
-        } else { 
+        } else {
             rpgGame.gameCharacters[rpgGame.currentOpponent].hp = 0;
             alert("You won this round!");
-            
-        }
-    
+            $("#opponent-area > #opponent-selected .char-all").addClass("defeated");
+            roundWon();
+            // TOOD: check for game over win here (rpgGame.wins > Object.keys...)
 
-        console.log("opponent: " + rpgGame.currentOpponent + " hp: " + rpgGame.gameCharacters[rpgGame.currentOpponent].hp);
-        console.log("character: " + rpgGame.currentCharacter + " hp: " + rpgGame.gameCharacters[rpgGame.currentCharacter].hp);
+            console.log(rpgGame.wins);
+            console.log(Object.keys(rpgGame.gameCharacters).length - 1);
+            if (rpgGame.wins > (Object.keys(rpgGame.gameCharacters).length - 1)) {
+
+                alert("Congrats!");
+                resetGame();
+                return;
+            }
+        }
         $("#character-" + rpgGame.currentCharacter + " > .char-hp").text(rpgGame.gameCharacters[rpgGame.currentCharacter].hp);
         $("#character-" + rpgGame.currentOpponent + " > .char-hp").text(rpgGame.gameCharacters[rpgGame.currentOpponent].hp);
+    });
 
-    })
+    function roundWon() {
+        $(".defeated").remove();
+        $("#opponent-select").show();
+        $("#opponent-area").hide();
+        rpgGame.wins++;
+    }
+
 
 
     // Create an array of already defeated opponents and hide them or move defeated opponents in a clunky way?
@@ -181,19 +194,4 @@ $(document).ready(function () {
 
 
     resetGame();
-
-
-
-
-
-
-
-
-    // Global variables:
-
-
-    // Characters
-
-
-
 });

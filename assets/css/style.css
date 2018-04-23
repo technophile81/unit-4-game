@@ -70,7 +70,7 @@ h1 {
     float: right;
 }
 #upcoming-opponents { float: right;}
-.char-all.nonactive { transform: scale(0.75,0.75);}
+/*.char-all.nonactive { transform: scale(0.75,0.75);}*/
 
 /* .temphide {
     display: none;
