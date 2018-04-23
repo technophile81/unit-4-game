@@ -179,7 +179,6 @@ $(document).ready(function () {
     }
 
 
-
     // Create an array of already defeated opponents and hide them or move defeated opponents in a clunky way?
 
 
