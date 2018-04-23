@@ -1,10 +1,17 @@
 /* My RPG Game */
 
+html,
 body {
-    background: url("../images/2d_rpg_game_background_by_willowwisp.jpg") no-repeat;
+    height: 100%;
+}
+
+body {
+    background: url("../images/game-bkgd.jpg") no-repeat;
     background-size: cover;
-    font-family: "Itim", cursive;
+    font-family: 'Lilita One', cursive;
     font-size: 18px;
+    text-transform: uppercase;
+    color: #fff; 
 }
 
 .container-fluid {
@@ -15,42 +22,84 @@ body {
 h1 {
     font-weight: bold;
     color: #fff;
+    text-indent: -5000px;
+    width: 350px;
+    height: 120px;
+    background: url("../images/game-logo.png") no-repeat;
+    filter: drop-shadow(0 0 40px rgba(0, 0, 0, 0.8));
+    margin: 0 auto;
+    background-size: 100%;
+    display: block;
 }
 
-/*button.reset {
-    display: none;
-}*/
+h2 {
+    text-align: center;
+    font-size: 24px; 
+    background: #e84233;
+
+}
 
 .char-pic {
     height: auto;
     width: auto;
     display: block;
     margin: 0 auto;
+    /*filter: drop-shadow(0 0 30px rgba(0,0,0,0.6));*/
+    transition: all .15s ease-in-out;
 }
 
 .char-all {
     margin-right: 30px;
     width: 200px;
     display: inline-block;
+    transition: all .15s ease-in-out;
+    transform: translate(0px, 0px);
 }
 
-.char-name,
+.char-all:last-of-type {
+    margin-right: 0;
+}
+
+.char-all:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    /*transform: scale(1.2,1.2);*/
+    /*transform: translateY(-5%);*/
+}
+
+.char-all:hover .char-pic {
+    transform: rotateY( 180deg);
+}
+
+.char-name {
+    font-size: 32px;
+    color: #fff;
+    text-align: center;
+text-shadow: 1px 1px 7px #000;
+    width: auto;
+}
+
 .char-hp {
     text-align: center;
     display: block;
-    background-color: blue;
-    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 4px;
+    border-radius: 4px;
+    font-size: 28px;
     color: #fff;
 }
 
 .selectedChar .char-hp,
 .selectedOpponent .char-hp {
-    background-color: red;
+    background-color: #e84233;
 }
 
 .selectedOpponent .char-pic {
     transform: scaleX(-1);
-    filter: FlipH;
+}
+
+.selectedOpponent:hover .char-pic {
+    transform: none;
 }
 
 #char-area {
@@ -69,7 +118,11 @@ h1 {
 #opponent-area {
     float: right;
 }
-#upcoming-opponents { float: right;}
+
+#upcoming-opponents {
+    float: right;
+}
+
 /*.char-all.nonactive { transform: scale(0.75,0.75);}*/
 
 /* .temphide {
@@ -77,9 +130,88 @@ h1 {
 }*/
 
 #fight-section {
-    margin: 330px 0 30px;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
-    background-color: #fff;
+    /* background-color: #fff; */
     padding: 30px;
-    width: 200px; 
+    width: 20%;
+
 }
+
+audio {
+    display: none;
+}
+
+/***** Ribbon *****/
+
+.ribbon {
+    font-size: 16px !important;
+    /* This ribbon is based on a 16px font side and a 24px vertical rhythm. I've used em's to position each element for scalability. If you want to use a different font size you may have to play with the position of the ribbon elements */
+    width: 50%;
+    position: relative;
+    background: #e84233;
+    color: #fff;
+    text-align: center;
+    filter: drop-shadow(0 0 40px rgba(0, 0, 0, 0.8));
+    padding: 1em 2em;
+    /* Adjust to suit */
+    margin: 2em auto 3em;
+    /* Based on 24px vertical rhythm. 48px bottom margin - normally 24 but the ribbon 'graphics' take up 24px themselves so we double it. */
+}
+
+.ribbon:before,
+.ribbon:after {
+    content: "";
+    position: absolute;
+    display: block;
+    bottom: -1em;
+    border: 1.5em solid #e83c35;
+    z-index: -1;
+}
+
+.ribbon:before {
+    left: -2em;
+    border-right-width: 1.5em;
+    border-left-color: transparent;
+}
+
+.ribbon:after {
+    right: -2em;
+    border-left-width: 1.5em;
+    border-right-color: transparent;
+}
+
+.ribbon .ribbon-content:before,
+.ribbon .ribbon-content:after {
+    content: "";
+    position: absolute;
+    display: block;
+    border-style: solid;
+    border-color: #df0928 transparent transparent transparent;
+    bottom: -1em;
+}
+
+.ribbon .ribbon-content:before {
+    left: 0;
+    border-width: 1em 0 0 1em;
+}
+
+.ribbon .ribbon-content:after {
+    right: 0;
+    border-width: 1em 1em 0 0;
+}
+
+@media (max-width: 1024px) {
+
+.char-all { 
+width: 150px;}
+
+}
+@media (max-width: 768px) {
+body{ background-size: auto;}
+    .char-all { 
+    width: 150px;}
+    
+    }

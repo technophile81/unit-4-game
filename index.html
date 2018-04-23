@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
 
-    <link href="https://fonts.googleapis.com/css?family=Gamja+Flower|Itim" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=EB+Garamond%7CLilita+One%7CItim" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
@@ -17,21 +17,22 @@
 </head>
 
 <body>
+
     <div class="container-fluid">
         <h1>My RPG Game</h1>
         <div id="char-area">
-            <h2>Select Your Character:</h2>
+            <h2 class="ribbon"><div class="ribbon-content">Select Your Character:</div></h2>
             <div id="char-list" class="clearfix"></div>
         </div>
-        <div id="char-area-select" class="temphide">
-            <h2>You chose:</h2>
+        <div id="char-area-select">
+            <h2><div>You chose:</div></h2>
             <div id="char-selected"></div>
         </div>
-        <div id="opponent-select" class="temphide">
-            <h2>Choose Your Opponent:</h2>
+        <div id="opponent-select">
+            <h2><div>Choose Your Opponent:</div></h2>
             <div id="opponent-list"></div>
         </div>
-        <div id="opponent-area" class="temphide">
+        <div id="opponent-area">
             <h2>Opponent:</h2>
             <div id="opponent-selected"></div>
 
@@ -47,7 +48,14 @@
             <div class="upcoming-list"></div>
 
         </div>
+        <audio autoplay loop id="bkgd-music">
+                <source src="assets/sounds/102-main title.ogg"></source>
+            </audio>
+<audio id="hoverclip" preload="auto">
 
+        <source src="assets/sounds/whoosh.ogg"></source>
+
+</audio>
 </body>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js" integrity="sha384-lZmvU/TzxoIQIOD9yQDEpvxp6wEU32Fy0ckUgOH4EIlMOCdR823rg4+3gWRwnX1M"
     crossorigin="anonymous"></script>

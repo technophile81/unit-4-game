@@ -1,18 +1,7 @@
 // My RPG Game
 //-------------------------------------------------------------------
 
-
-// Player continues hitting ATTACK button to defeat enemy.
-
-// Remove enemy from "defender area".
-
 // Player chooses a new opponent.
-
-// Player wins when all enemies are defeated. 
-
-// Player loses if their HP falls to 0 or below.
-
-// Restart button appears when player wins or loses.
 
 // Note: Challenge should come from picking the right enemies, not choosing the strongest player. 
 
@@ -21,6 +10,13 @@ $(document).ready(function () {
     // Establish an object for the entire game.
 
     var rpgGame = {};
+
+    // Background music because why not.
+
+    var bgMusic = $("#bkgd-music")[0],
+        playing = true;
+    const rollSound = new Audio("assets/images/whoosh.ogg");
+    $('.char-all').click(e => rollSound.play());
 
     // Create a function to reset the game. This will be a click that appears after player HP hits 0.
 
@@ -110,11 +106,14 @@ $(document).ready(function () {
         }
         // This is the initial character selection that will move chosen character while moving remaining to opponent selection area.
         $("#char-list").on("click", ".char-all", function () {
+            //test
+
             $(this).addClass("selectedChar");
             $("#char-area").hide();
             $("#char-area-select").show();
 
             $(".selectedChar").appendTo("#char-selected").removeClass("default");
+            
             $(".default").appendTo("#opponent-list");
             $("#opponent-select").show();
 
@@ -156,19 +155,19 @@ $(document).ready(function () {
             alert("You won this round!");
             $("#opponent-area > #opponent-selected .char-all").addClass("defeated");
             roundWon();
-            // TOOD: check for game over win here (rpgGame.wins > Object.keys...)
 
+            // Player wins when all enemies are defeated. 
             console.log(rpgGame.wins);
             console.log(Object.keys(rpgGame.gameCharacters).length - 1);
-            if (rpgGame.wins > (Object.keys(rpgGame.gameCharacters).length - 1)) {
+            if (rpgGame.wins >= (Object.keys(rpgGame.gameCharacters).length - 1)) {
 
                 alert("Congrats! You beat the game!");
                 resetGame();
                 return;
             }
         }
+        // Player loses if their HP falls to 0 or below.
         if (rpgGame.gameCharacters[rpgGame.currentCharacter].hp <= 0) {
-
             alert("You lost!")
             resetGame();
             return;
@@ -185,14 +184,11 @@ $(document).ready(function () {
         rpgGame.wins++;
     }
 
-
-    // Create an array of already defeated opponents and hide them or move defeated opponents in a clunky way?
-
-
     // Opponent will instantly counter the attack. When that happens, the player's character loses some of their HP.
     function counterAttack() {
         rpgGame.gameCharacters[rpgGame.currentCharacter].hp -= rpgGame.gameCharacters[rpgGame.currentOpponent].counter;
     }
+    // Restart button appears when player wins or loses.
 
     $(".reset").click(function () {
         resetGame();
