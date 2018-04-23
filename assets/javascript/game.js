@@ -162,11 +162,18 @@ $(document).ready(function () {
             console.log(Object.keys(rpgGame.gameCharacters).length - 1);
             if (rpgGame.wins > (Object.keys(rpgGame.gameCharacters).length - 1)) {
 
-                alert("Congrats!");
+                alert("Congrats! You beat the game!");
                 resetGame();
                 return;
             }
         }
+        if (rpgGame.gameCharacters[rpgGame.currentCharacter].hp <= 0) {
+
+            alert("You lost!")
+            resetGame();
+            return;
+        }
+
         $("#character-" + rpgGame.currentCharacter + " > .char-hp").text(rpgGame.gameCharacters[rpgGame.currentCharacter].hp);
         $("#character-" + rpgGame.currentOpponent + " > .char-hp").text(rpgGame.gameCharacters[rpgGame.currentOpponent].hp);
     });
