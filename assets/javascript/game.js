@@ -1,22 +1,13 @@
 // My RPG Game
 //-------------------------------------------------------------------
 
-// Player chooses a new opponent.
-
-// Note: Challenge should come from picking the right enemies, not choosing the strongest player. 
+// Note to self: Challenge should come from picking the right enemies, not choosing the strongest player. 
 
 $(document).ready(function () {
 
     // Establish an object for the entire game.
 
     var rpgGame = {};
-
-    // Background music because why not.
-
-    var bgMusic = $("#bkgd-music")[0],
-        playing = true;
-    const rollSound = new Audio("assets/sounds/whoosh.ogg");
-    $('.char-all').click(e => rollSound.play());
 
     // Create a function to reset the game. This will be a click that appears after player HP hits 0.
 
@@ -106,7 +97,6 @@ $(document).ready(function () {
         }
         // This is the initial character selection that will move chosen character while moving remaining to opponent selection area.
         $("#char-list").on("click", ".char-all", function () {
-            //test
 
             $(this).addClass("selectedChar");
             $("#char-area").hide();
@@ -125,14 +115,11 @@ $(document).ready(function () {
         // This action will also reveal the "fight" window.
         $("#opponent-list").on("click", ".char-all", function () {
             $(this).addClass("selectedOpponent");
-            //New stuff if things break
             $(".char-all").addClass("nonactive");
             $(".selectedOpponent").appendTo("#opponent-selected").removeClass("nonactive");
             $(".selectedChar").removeClass("nonactive");
-            // $("#upcoming-opponents", ".upcoming-list").show();
             $(".nonactive > .char-all").appendTo(".upcoming-list");
 
-            //end of new
             $("#opponent-select").hide();
             $("#opponent-area").show();
             $("#fight-section").show();
@@ -188,8 +175,8 @@ $(document).ready(function () {
     function counterAttack() {
         rpgGame.gameCharacters[rpgGame.currentCharacter].hp -= rpgGame.gameCharacters[rpgGame.currentOpponent].counter;
     }
-    // Restart button appears when player wins or loses.
 
+    // Restart button appears when player wins or loses.
     $(".reset").click(function () {
         resetGame();
     });
